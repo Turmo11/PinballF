@@ -5,6 +5,8 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 
+#include "p2Defs.h"
+
 #include "Application.h"
 
 Application::Application()

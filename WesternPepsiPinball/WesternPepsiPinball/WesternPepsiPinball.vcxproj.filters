@@ -15,9 +15,6 @@
     <ClCompile Include="Application.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -35,6 +32,9 @@
     </ClCompile>
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="p2Log.cpp">
+      <Filter>Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="ModuleTextures.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Log.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Defs.h">
+      <Filter>Containers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
