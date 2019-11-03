@@ -131,7 +131,7 @@ bool ModuleSceneIntro::Start()
 
 	//Load Music and SFX
 
-	intro_music = App->audio->LoadFx("Assets/Audio/Music/bgMusic.wav");
+	intro_music = App->audio->LoadFx("Assets/Audio/bgMusic.wav");
 
 	//Load Fonts
 
