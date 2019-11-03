@@ -57,6 +57,8 @@ public:
 	SDL_Texture* multipliersOFF = nullptr;
 	SDL_Texture* multipliersON = nullptr;
 
+	SDL_Texture* final_score = nullptr;
+
 	//Audio
 
 	uint intro_music;

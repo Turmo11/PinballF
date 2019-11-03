@@ -135,7 +135,7 @@ update_status ModulePlayer::Update()
 	//Death check
 
 	ball->GetPosition(position.x, position.y);
-	if (position.y > SCREEN_HEIGHT && life <= max_lives) {
+	if (position.y > SCREEN_HEIGHT && life < max_lives) {
 		delete ball;
 		ball->body = nullptr;
 		AddBall(initialBallPosition.x, initialBallPosition.y);
