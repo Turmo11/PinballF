@@ -1,7 +1,8 @@
 # WESTERN PEPSI PINBALL
  
 This is a remake of the already existing pinball game by pepsi for academic purposes only, our main goal was to get an accurate version of the original game. 
-However, there are some differences, in the original game whenever you take down all cowboys, a minigame opens when you enter the saloon, we weren't able to replicate that
+However, there are some differences, in the original game whenever you take down all cowboys, a minigame opens when you enter the saloon, we weren't able to replicate that.
+Plus in this version we weren't able to make the OnCollision work properly, therefore making all the bonus, score and other traits implementation seem not active.
 
 ## Team Members
 
@@ -18,7 +19,7 @@ However, there are some differences, in the original game whenever you take down
 * Contact: raulmorenteelvira@gmail.com
 * Tasks:
   * Scene physics
-  * Map shapes
+  * Map shapes/colliders
 
 **Albert Robles**
 * Github: [Albertito029](https://github.com/Albertito029)

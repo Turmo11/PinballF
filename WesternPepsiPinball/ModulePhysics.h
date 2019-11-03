@@ -47,7 +47,7 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type, int res);
 
-	// b2ContactListener ---
+	
 	void BeginContact(b2Contact* contact);
 	void Restart();
 
