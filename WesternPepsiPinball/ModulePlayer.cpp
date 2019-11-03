@@ -55,8 +55,11 @@ bool ModulePlayer::Start()
 	life = 1;
 
 	AddBall(initialBallPosition.x, initialBallPosition.y);
-	CreateFlippers();
-	CreateLauncher();
+
+	if (!App->scene_intro->game_over) {
+		CreateFlippers();
+		CreateLauncher();
+	}
 
 	return true;
 }
@@ -65,7 +68,6 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
 
 	App->textures->Unload(flipper_tex);
 	App->textures->Unload(ball_tex);
@@ -81,6 +83,7 @@ update_status ModulePlayer::Update()
 	{
 		DrawEverything();
 	}
+
 	//Controlls
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && App->player->life != 0)
@@ -100,11 +103,13 @@ update_status ModulePlayer::Update()
 		}
 		flipperplayed = true;
 	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 	{
 		leftFlipperJoint->EnableMotor(false);
 		flipperplayed = false;
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		rightFlipperJoint1->EnableMotor(true);
@@ -115,6 +120,7 @@ update_status ModulePlayer::Update()
 		}
 		flipperplayed = true;
 	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
 	{
 		rightFlipperJoint1->EnableMotor(false);
@@ -127,9 +133,17 @@ update_status ModulePlayer::Update()
 		App->audio->PlayFx(horseSound);
 		horse.Reset();
 	}
+
 	else
 	{
 		propellerJoint->EnableMotor(false);
+	}
+
+	//Restart
+
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->scene_intro->game_over)
+	{
+		App->physics->Restart();
 	}
 
 	SDL_Rect r = horse.GetCurrentFrame();

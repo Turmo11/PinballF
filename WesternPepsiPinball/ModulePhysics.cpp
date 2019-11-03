@@ -5,6 +5,9 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 #include "math.h"
+#include "ModuleSceneIntro.h"
+#include "ModulePlayer.h"
+#include "Box2D/Box2D/Box2D.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -568,4 +571,15 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if (physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+void ModulePhysics::Restart()
+{
+	LOG("RESTART");
+
+	App->player->CleanUp();
+	App->scene_intro->CleanUp();
+
+	App->player->Start();
+	App->scene_intro->Start();
 }

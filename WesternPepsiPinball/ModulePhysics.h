@@ -49,6 +49,7 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+	void Restart();
 
 	b2World* world;
 
