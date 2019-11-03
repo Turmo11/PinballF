@@ -17,6 +17,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void createSensors();
+	void setBonus();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:
@@ -37,6 +38,13 @@ public:
 
 	SDL_Rect cowboyON;
 	SDL_Rect cowboyOFF;
+
+	SDL_Rect bonus_x2_ON;
+	SDL_Rect bonus_x4_ON;
+	SDL_Rect bonus_x6_ON;
+	SDL_Rect bonus_x8_ON;
+	SDL_Rect bonus_x10_ON;
+	SDL_Rect hold_ON;
 
 	//Textures
 
@@ -89,12 +97,20 @@ public:
 	bool cowboy10_state = true;
 	bool cowboy11_state = true;
 
+	bool bonus_x2 = false;
+	bool bonus_x4 = false;
+	bool bonus_x6 = false;
+	bool bonus_x8 = false;
+	bool bonus_x10 = false;
 	bool hold = false;
+
+	bool game_over = false;
 
 	//Score
 
 	int score_font = -1;
-	char scoreText[10];
+	char scoreboard[10];
+	char life_count[10];
 
 	uint score;
 	uint high_score;
@@ -103,6 +119,8 @@ public:
 	uint cowboy_points;
 	uint tunel_points;
 	uint wagon_points;
+
+	uint bonus;
 
 private:
 

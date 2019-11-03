@@ -25,7 +25,15 @@ public:
 
 public:
 
-	PhysBody* ball = nullptr;
+	//# of balls
+	uint life;
+	uint max_lives = 5;
+
+	//Booleans
+
+	bool dead = false;
+
+	//Textures
 
 	SDL_Texture* ball_tex = nullptr;
 	SDL_Texture* flipper_tex = nullptr;
@@ -34,13 +42,15 @@ public:
 	SDL_Rect right_flipper;
 	SDL_Rect left_flipper;
 
-	int score;
-	int life;
-	int highest_score;
+	//Positions
 
 	iPoint initialBallPosition;
 	iPoint position;
 	iPoint flipper_position;
+
+	//Physics
+
+	PhysBody* ball = nullptr;
 
 	PhysBody* leftFlipper = nullptr;
 	PhysBody* leftFlipper_pivot = nullptr;

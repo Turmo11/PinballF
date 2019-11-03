@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 #include "ModuleFonts.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -18,6 +19,15 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	flag2_ON = { 17, 57, 50, 41 };
 	flag3_OFF = { 67, 117, 38, 46 };
 	flag3_ON = { 15, 117, 38, 46 };
+
+	//Bonus ON
+
+	bonus_x2_ON = { 63, 221, 26, 19 };
+	bonus_x4_ON = { 27, 221, 26, 19 };
+	bonus_x6_ON = { 63, 191, 26, 19 };
+	bonus_x8_ON = { 101, 220, 26, 19 };
+	bonus_x10_ON = { 28, 191, 26, 19 };
+	hold_ON = { 101, 190, 26, 19 };
 
 	//Bumper Anim
 	bumper1_anim.PushBack({ 116, 7, 45, 36 });
@@ -94,6 +104,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	cowboy11_anim.PushBack(cowboyOFF);
 	cowboy11_anim.loop = false;
 	cowboy11_anim.speed = 1.0f;
+
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -130,6 +141,7 @@ bool ModuleSceneIntro::Start()
 
 	score = 000000000000;
 	high_score = 123123;
+	bonus = 0;
 
 	bump_points = 500;
 	flag_points = 1000;
@@ -226,13 +238,40 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(switches, 431, 106);
 	App->renderer->Blit(background2, 26, 82);
 
+	//Blit active bonuses
+	if (bonus_x2)
+		App->renderer->Blit(multipliersON, 310, 467, &bonus_x2_ON);
+
+	if (bonus_x4)
+		App->renderer->Blit(multipliersON, 310, 432, &bonus_x4_ON);
+
+	if (bonus_x6)
+		App->renderer->Blit(multipliersON, 267, 421, &bonus_x6_ON);
+
+	if (bonus_x8)
+		App->renderer->Blit(multipliersON, 350, 421, &bonus_x8_ON);
+
+	if (bonus_x10)
+		App->renderer->Blit(multipliersON, 207, 332, &bonus_x10_ON);
+
+	if (hold)
+		App->renderer->Blit(multipliersON, 448, 332, &hold_ON);
+	
 	//Scoreboard
 
-	sprintf_s(scoreText, 10, "%7d", score);
-	App->fonts->BlitText(97, 473, score_font, scoreText);
+	if (score > high_score)
+	{
+		high_score = score;
+	}
 
-	sprintf_s(scoreText, 10, "%7d", high_score);
-	App->fonts->BlitText(97, 525, score_font, scoreText);
+	sprintf_s(life_count, 10, "%1d", App->player->life);
+	App->fonts->BlitText(200, 473, score_font, life_count);
+
+	sprintf_s(scoreboard, 10, "%7d", score);
+	App->fonts->BlitText(97, 473, score_font, scoreboard);
+
+	sprintf_s(scoreboard, 10, "%7d", high_score);
+	App->fonts->BlitText(97, 525, score_font, scoreboard);
 
 	// Prepare for raycast ------------------------------------------------------
 
@@ -316,6 +355,33 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	else 
 	{
 		score += bump_points;
+	}
+}
+
+void ModuleSceneIntro::setBonus() {
+
+	if (flag1_state == true && flag2_state == true && flag3_state == true) {
+		bonus++;
+		score += flag_points;
+		flag1_state = false;
+		flag2_state = false;
+		flag3_state = false;
+
+		switch (bonus) {
+		case 1: bonus_x2 = true;
+			break;
+		case 2: bonus_x4 = true;
+			break;
+		case 3: bonus_x6 = true;
+			break;
+		case 4: bonus_x8 = true;
+			break;
+		case 5: bonus_x10 = true;
+			break;
+		case 6: hold = true;
+			break;
+		}
+
 	}
 }
 

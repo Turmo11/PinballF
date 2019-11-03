@@ -80,11 +80,9 @@ update_status ModulePlayer::Update()
 	leftFlipper->GetPosition(position.x, position.y);
 	App->renderer->Blit(flipper_tex, position.x, position.y, &left_flipper, 1.0f, leftFlipper->GetRotation());
 
-	// Highscore
-	if (score > highest_score)
-	{
-		highest_score = score;
-	}
+	//Death check
+
+
 
 	return UPDATE_CONTINUE;
 }
