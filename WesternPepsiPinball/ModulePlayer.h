@@ -19,11 +19,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	//void OnCollision(PhysBody* BodyA, PhysBody* BodyB);
-	void putLeftFlipper();
-	void putRightFlipper();
+	void CreateFlippers();
+	void DrawEverything();
+	void AddBall(uint x, uint y);
 
 public:
+
 
 	//# of balls
 	uint life;
@@ -35,18 +36,22 @@ public:
 
 	//Textures
 
+	Animation horse;
+
+	PhysBody* ball = nullptr;
+
+
 	SDL_Texture* ball_tex = nullptr;
 	SDL_Texture* flipper_tex = nullptr;
 	SDL_Texture* horse_tex = nullptr;
 
-	SDL_Rect right_flipper;
-	SDL_Rect left_flipper;
+	SDL_Rect rightFlipper_section;
+	SDL_Rect leftFlipper_section;
 
 	//Positions
 
 	iPoint initialBallPosition;
 	iPoint position;
-	iPoint flipper_position;
 
 	//Physics
 

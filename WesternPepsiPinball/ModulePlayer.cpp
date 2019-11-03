@@ -12,8 +12,18 @@
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled) 
 {
-	left_flipper = { 2, 3, 72, 21 };
-	right_flipper = { 2, 28, 72, 21 };
+	leftFlipper_section = { 2, 3, 72, 21 };
+	rightFlipper_section = { 2, 28, 72, 21 };
+
+	horse.PushBack({ 48, 58, 72, 104 });
+	horse.PushBack({ 150, 58, 72, 104 });
+	horse.PushBack({ 242, 58, 72, 104 });
+	horse.PushBack({ 331, 59, 72, 104 });
+	horse.PushBack({ 242, 58, 72, 104 });
+	horse.PushBack({ 48, 58, 72, 104 });
+
+	horse.speed = 0.15f;
+	horse.loop = false;
 }
 
 ModulePlayer::~ModulePlayer() {}
@@ -25,12 +35,12 @@ bool ModulePlayer::Start()
 
 	ball_tex = App->textures->Load("Assets/Textures/ball.png");
 	flipper_tex = App->textures->Load("Assets/Textures/flipper.png");
+	horse_tex = App->textures->Load("Assets/Textures/horse.png");
 
 	initialBallPosition = { 620, 200 };
-	ball = App->physics->CreateCircle(initialBallPosition.x, initialBallPosition.y, 12, b2_dynamicBody, false);
 
-	putRightFlipper();
-	putLeftFlipper();
+	AddBall(initialBallPosition.x, initialBallPosition.y);
+	CreateFlippers();
 	
 	return true;
 }
@@ -43,6 +53,7 @@ bool ModulePlayer::CleanUp()
 
 	App->textures->Unload(flipper_tex);
 	App->textures->Unload(ball_tex);
+	App->textures->Unload(horse_tex);
 
 	return true;
 }
@@ -50,16 +61,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	//Drawing ball
-
-	if (ball != nullptr) {
-
-		int ballpos_x;
-		int ballpos_y;
-
-		ball->GetPosition(ballpos_x, ballpos_y);
-		App->renderer->Blit(ball_tex, ballpos_x, ballpos_y, NULL);
-	}
+	DrawEverything();
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && App->player->life != 0)
 	{
@@ -67,18 +69,10 @@ update_status ModulePlayer::Update()
 		b2Vec2 point = ball->body->GetLocalCenter();
 
 		ball->body->ApplyLinearImpulse(impulse, point, true);
-	}
+	}	
 
-	//Drawing flippers
-	
-	rightFlipper1->GetPosition(flipper_position.x, flipper_position.y);
-	App->renderer->Blit(flipper_tex, flipper_position.x, flipper_position.y, &right_flipper, 1.0f, rightFlipper1->GetRotation());
-
-	rightFlipper2->GetPosition(position.x, position.y);
-	App->renderer->Blit(flipper_tex, position.x, position.y, &right_flipper, 1.0f, rightFlipper2->GetRotation());
-
-	leftFlipper->GetPosition(position.x, position.y);
-	App->renderer->Blit(flipper_tex, position.x, position.y, &left_flipper, 1.0f, leftFlipper->GetRotation());
+	SDL_Rect r = horse.GetCurrentFrame();
+	App->renderer->Blit(horse_tex, 600, 390, &r);
 
 	//Death check
 
@@ -87,8 +81,29 @@ update_status ModulePlayer::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModulePlayer::putRightFlipper() {
-	// Lower flipper
+void ModulePlayer::AddBall(uint x, uint y)
+{
+	ball = App->physics->CreateCircle(initialBallPosition.x, initialBallPosition.y, 12, b2_dynamicBody, false);
+}
+
+void ModulePlayer :: DrawEverything() 
+{
+	ball->GetPosition(position.x, position.y);
+	App->renderer->Blit(ball_tex, position.x, position.y, NULL);
+
+	rightFlipper1->GetPosition(position.x, position.y);
+	App->renderer->Blit(flipper_tex, position.x, position.y, &rightFlipper_section, 1.0f, rightFlipper1->GetRotation());
+
+	rightFlipper2->GetPosition(position.x, position.y);
+	App->renderer->Blit(flipper_tex, position.x, position.y, &rightFlipper_section, 1.0f, rightFlipper2->GetRotation());
+
+	leftFlipper->GetPosition(position.x, position.y);
+	App->renderer->Blit(flipper_tex, position.x, position.y, &leftFlipper_section, 1.0f, leftFlipper->GetRotation());
+}
+void ModulePlayer::CreateFlippers() 
+{
+	// Right Lower flipper
+
 	rightFlipper1 = App->physics->CreateRectangle(375, 500, 32, 10, b2_dynamicBody);
 	rightFlipper1_pivot = App->physics->CreateCircle(393, 489, 3, b2_staticBody, false);
 
@@ -113,7 +128,8 @@ void ModulePlayer::putRightFlipper() {
 
 	rightFlipperJoint1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef1);
 
-	// Upper flipper
+	// Right Upper flipper
+
 	rightFlipper2 = App->physics->CreateRectangle(475, 280, 32, 10, b2_dynamicBody);
 	rightFlipper2_pivot = App->physics->CreateCircle(499, 295, 3, b2_staticBody, false);
 
@@ -137,9 +153,9 @@ void ModulePlayer::putRightFlipper() {
 	revoluteJointDef2.enableMotor = false;
 
 	rightFlipperJoint2 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef2);
-}
 
-void ModulePlayer::putLeftFlipper() {
+	//Left Flipper
+
 	leftFlipper = App->physics->CreateRectangle(242, 500, 32, 10, b2_dynamicBody);
 	leftFlipper_pivot = App->physics->CreateCircle(255, 489, 3, b2_staticBody, false);
 
