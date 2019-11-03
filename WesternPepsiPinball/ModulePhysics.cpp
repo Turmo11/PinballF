@@ -18,7 +18,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor
@@ -36,9 +36,6 @@ bool ModulePhysics::Start()
 	// needed to create joints like mouse joint
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
-
-	// big static circle as "ground" in the middle of the screen
-	
 
 	return true;
 }
@@ -65,7 +62,7 @@ update_status ModulePhysics::PreUpdate()
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, bool isSensor)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -86,27 +83,26 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type,
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType bodyType)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = bodyType;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
 	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+	box.SetAsBox(PIXEL_TO_METERS(width), PIXEL_TO_METERS(height));
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 1.0f;
-
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
-	pbody->width = width * 0.5f;
-	pbody->height = height * 0.5f;
+	pbody->width = width;
+	pbody->height = height;
 
 	return pbody;
 }
