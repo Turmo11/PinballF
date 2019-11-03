@@ -129,9 +129,11 @@ bool ModuleSceneIntro::Start()
 	multipliersOFF = App->textures->Load("Assets/Textures/multipliersOFF.png");
 	multipliersON = App->textures->Load("Assets/Textures/multipliersON.png");
 
+	final_score = App->textures->Load("Assets/Textures/finalScore.png");
+
 	//Load Music and SFX
 
-	intro_music = App->audio->LoadFx("Assets/Audio/Music/bgMusic.wav");
+	intro_music = App->audio->LoadFx("Assets/Audio/bgMusic.wav");
 
 	//Load Fonts
 
@@ -169,6 +171,8 @@ bool ModuleSceneIntro::CleanUp()
 
 	App->textures->Unload(background);
 	App->textures->Unload(background2);
+
+	App->textures->Unload(final_score);
 	return true;
 }
 
@@ -178,14 +182,14 @@ update_status ModuleSceneIntro::Update()
 	//Blit Textures
 
 	App->renderer->Blit(background, 0, 0);
-	
+
 	App->renderer->Blit(barrels1, 146, 340);
 	App->renderer->Blit(barrels2, 409, 347);
-	
+
 	App->renderer->Blit(multipliersOFF, 193, 233);
 
 	//Blit Cowboys
-	
+
 	App->renderer->Blit(bumper, 325, 143, &cowboy1_anim.GetCurrentFrame());
 	App->renderer->Blit(bumper, 304, 155, &cowboy2_anim.GetCurrentFrame());
 	App->renderer->Blit(bumper, 284, 166, &cowboy3_anim.GetCurrentFrame());
@@ -210,7 +214,7 @@ update_status ModuleSceneIntro::Update()
 
 	//Blit bonus flags
 
-	if (flag1_state) 
+	if (flag1_state)
 	{
 		App->renderer->Blit(multipliersON, 409, 102, &flag1_ON);
 	}
@@ -240,38 +244,56 @@ update_status ModuleSceneIntro::Update()
 
 	//Blit active bonuses
 	if (bonus_x2)
+	{ 
 		App->renderer->Blit(multipliersON, 310, 467, &bonus_x2_ON);
-
-	if (bonus_x4)
-		App->renderer->Blit(multipliersON, 310, 432, &bonus_x4_ON);
-
-	if (bonus_x6)
-		App->renderer->Blit(multipliersON, 267, 421, &bonus_x6_ON);
-
-	if (bonus_x8)
-		App->renderer->Blit(multipliersON, 350, 421, &bonus_x8_ON);
-
-	if (bonus_x10)
-		App->renderer->Blit(multipliersON, 207, 332, &bonus_x10_ON);
-
-	if (hold)
-		App->renderer->Blit(multipliersON, 448, 332, &hold_ON);
-	
-	//Scoreboard
-
-	if (score > high_score)
-	{
-		high_score = score;
 	}
 
-	sprintf_s(life_count, 10, "%1d", App->player->life);
-	App->fonts->BlitText(200, 473, score_font, life_count);
+	if (bonus_x4)
+	{
+		App->renderer->Blit(multipliersON, 310, 432, &bonus_x4_ON);
+	}
 
-	sprintf_s(scoreboard, 10, "%7d", score);
-	App->fonts->BlitText(97, 473, score_font, scoreboard);
+	if (bonus_x6)
+	{
+		App->renderer->Blit(multipliersON, 267, 421, &bonus_x6_ON);
+	}
 
-	sprintf_s(scoreboard, 10, "%7d", high_score);
-	App->fonts->BlitText(97, 525, score_font, scoreboard);
+	if (bonus_x8)
+	{
+		App->renderer->Blit(multipliersON, 350, 421, &bonus_x8_ON);
+	}
+
+	if (bonus_x10)
+	{
+		App->renderer->Blit(multipliersON, 207, 332, &bonus_x10_ON);
+	}
+
+	if (hold)
+	{
+		App->renderer->Blit(multipliersON, 448, 332, &hold_ON);
+	}
+
+	//Scoreboard
+
+	if (App->player->life <= App->player->max_lives)
+	{
+
+		sprintf_s(life_count, 10, "%1d", App->player->life);
+		App->fonts->BlitText(200, 473, score_font, life_count);
+
+		sprintf_s(scoreboard, 10, "%7d", score);
+		App->fonts->BlitText(97, 473, score_font, scoreboard);
+
+		sprintf_s(scoreboard, 10, "%7d", high_score);
+		App->fonts->BlitText(97, 525, score_font, scoreboard);
+	}
+
+	if (game_over) {
+		App->renderer->Blit(final_score, 170, 100);
+
+		sprintf_s(scoreboard, 10, "%7d", high_score);
+		App->fonts->BlitText(280, 130, score_font, scoreboard);
+	}
 
 	// Prepare for raycast ------------------------------------------------------
 
