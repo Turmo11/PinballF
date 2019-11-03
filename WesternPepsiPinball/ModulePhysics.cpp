@@ -141,10 +141,10 @@ update_status ModulePhysics::PreUpdate()
 
 		b2Body* bg1 = world->CreateBody(&backgroundBody);
 
-		b2ChainShape shape;
-		shape.CreateLoop(background, 62);
+		b2ChainShape backgroundShape;
+		backgroundShape.CreateLoop(background, 62);
 		b2FixtureDef backgroundFixture;
-		backgroundFixture.shape = &shape;
+		backgroundFixture.shape = &backgroundShape;
 
 		bg1->CreateFixture(&backgroundFixture);
 
@@ -180,10 +180,10 @@ update_status ModulePhysics::PreUpdate()
 
 		b2Body* bg2 = world->CreateBody(&background2Body);
 
-		b2ChainShape shape;
-		shape.CreateLoop(background2, 12);
+		b2ChainShape background2Shape;
+		background2Shape.CreateLoop(background2, 12);
 		b2FixtureDef background2Fixture;
-		background2Fixture.shape = &shape;
+		background2Fixture.shape = &background2Shape;
 
 		bg2->CreateFixture(&background2Fixture);
 
@@ -249,10 +249,10 @@ update_status ModulePhysics::PreUpdate()
 
 		b2Body* pth = world->CreateBody(&pathToHorseBody);
 
-		b2ChainShape shape;
-		shape.CreateLoop(pathToHorse, 37);
+		b2ChainShape pathToHorseShape;
+		pathToHorseShape.CreateLoop(pathToHorse, 37);
 		b2FixtureDef pathToHorseFixture;
-		pathToHorseFixture.shape = &shape;
+		pathToHorseFixture.shape = &pathToHorseShape;
 
 		pth->CreateFixture(&pathToHorseFixture);
 
