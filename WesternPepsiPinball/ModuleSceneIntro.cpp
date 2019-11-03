@@ -128,7 +128,8 @@ bool ModuleSceneIntro::Start()
 
 	//Each sensor gives a different amount of points to the player
 
-	score = 0;
+	score = 000000000000;
+	high_score = 123123;
 
 	bump_points = 500;
 	flag_points = 1000;
