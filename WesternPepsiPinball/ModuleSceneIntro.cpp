@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModuleFonts.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -121,7 +122,13 @@ bool ModuleSceneIntro::Start()
 
 	intro_music = App->audio->LoadFx("Assets/Audio/Music/bgMusic.wav");
 
+	//Load Fonts
+
+	score_font = App->fonts->Load("Assets/Fonts/score.png", "0123845679", 2);
+
 	//Each sensor gives a different amount of points to the player
+
+	score = 0;
 
 	bump_points = 500;
 	flag_points = 1000;
@@ -129,7 +136,7 @@ bool ModuleSceneIntro::Start()
 	tunel_points = 250000;
 	wagon_points = 500000;
 
-	App->audio->PlayFx(bg_music);
+	App->audio->PlayFx(intro_music);
 	createSensors();
 
 	return ret;
@@ -217,6 +224,15 @@ update_status ModuleSceneIntro::Update()
 
 	App->renderer->Blit(switches, 431, 106);
 	App->renderer->Blit(background2, 26, 82);
+
+	//Scoreboard
+
+	sprintf_s(scoreText, 10, "%7d", score);
+	App->fonts->BlitText(97, 473, score_font, scoreText);
+
+	sprintf_s(scoreText, 10, "%7d", high_score);
+	App->fonts->BlitText(97, 525, score_font, scoreText);
+
 	// Prepare for raycast ------------------------------------------------------
 
 	iPoint mouse;
@@ -251,11 +267,6 @@ void ModuleSceneIntro::createSensors() {
 
 	// Sensors for the path
 	tunel_sensor = App->physics->CreateRectangleSensor(550, 275, 15, 15);
-
-	
-
-	
-
 	
 }
 

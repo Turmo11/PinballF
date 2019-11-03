@@ -93,7 +93,11 @@ public:
 
 	//Score
 
+	int score_font = -1;
+	char scoreText[10];
+
 	uint score;
+	uint high_score;
 	uint bump_points;
 	uint flag_points;
 	uint cowboy_points;
