@@ -7,7 +7,7 @@ class PhysBody;
 
 class Module
 {
-private:
+private :
 	bool enabled;
 
 public:
@@ -26,7 +26,7 @@ public:
 
 	void Enable()
 	{
-		if (enabled == false)
+		if(enabled == false)
 		{
 			enabled = true;
 			Start();
@@ -35,16 +35,16 @@ public:
 
 	void Disable()
 	{
-		if (enabled == true)
+		if(enabled == true)
 		{
 			enabled = false;
 			CleanUp();
 		}
 	}
 
-	virtual bool Init()
+	virtual bool Init() 
 	{
-		return true;
+		return true; 
 	}
 
 	virtual bool Start()
@@ -67,9 +67,9 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual bool CleanUp()
-	{
-		return true;
+	virtual bool CleanUp() 
+	{ 
+		return true; 
 	}
 
 	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB)

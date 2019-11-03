@@ -1,12 +1,7 @@
 #include <stdlib.h>
-
-#include "p2Log.h"
-#include "p2Defs.h"
-#include "Globals.h"
 #include "Application.h"
+#include "Globals.h"
 
-// This is needed here because SDL redefines main function
-// do not add any other libraries here, instead put them in their modules
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
@@ -20,45 +15,41 @@ enum main_states
 	MAIN_EXIT
 };
 
-
-Application* App = NULL;
-
-int main(int argc, char* args[])
+int main(int argc, char ** argv)
 {
-	LOG("Engine starting ... %d");
+	LOG("Starting game '%s'...", TITLE);
 
-	main_states state = MAIN_CREATION;
 	int main_return = EXIT_FAILURE;
+	main_states state = MAIN_CREATION;
+	Application* App = NULL;
 
 	while (state != MAIN_EXIT)
 	{
 		switch (state)
 		{
-
-			// Allocate the engine --------------------------------------------
 		case MAIN_CREATION:
-			LOG("CREATION PHASE ===============================");
 
+			LOG("-------------- Application Creation --------------");
 			App = new Application();
 			state = MAIN_START;
 			break;
-		
-			// Call all modules before first frame  ----------------------------
+
 		case MAIN_START:
-			LOG("START PHASE ===============================");
-			if (App->Init() == true)
+
+			LOG("-------------- Application Init --------------");
+			if (App->Init() == false)
 			{
-				state = MAIN_UPDATE;
-				LOG("UPDATE PHASE ===============================");
+				LOG("Application Init exits with ERROR");
+				state = MAIN_EXIT;
 			}
 			else
 			{
-				state = MAIN_EXIT;
-				LOG("ERROR: Start failed");
+				state = MAIN_UPDATE;
+				LOG("-------------- Application Update --------------");
 			}
+
 			break;
 
-			// Loop all modules until we are asked to leave ---------------------
 		case MAIN_UPDATE:
 		{
 			int update_return = App->Update();
@@ -72,9 +63,8 @@ int main(int argc, char* args[])
 			if (update_return == UPDATE_STOP)
 				state = MAIN_FINISH;
 		}
-		break;
+			break;
 
-			// Cleanup allocated memory -----------------------------------------
 		case MAIN_FINISH:
 
 			LOG("-------------- Application CleanUp --------------");
@@ -88,11 +78,11 @@ int main(int argc, char* args[])
 			state = MAIN_EXIT;
 
 			break;
+
 		}
 	}
 
-	LOG("... Bye! :)\n");
-
-	// Dump memory leaks
+	delete App;
+	LOG("Exiting game '%s'...\n", TITLE);
 	return main_return;
 }
