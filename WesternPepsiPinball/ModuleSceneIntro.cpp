@@ -117,6 +117,10 @@ bool ModuleSceneIntro::Start()
 	multipliersOFF = App->textures->Load("Assets/Textures/multipliersOFF.png");
 	multipliersON = App->textures->Load("Assets/Textures/multipliersON.png");
 
+	//Load Music and SFX
+
+	intro_music = App->audio->LoadFx("Assets/Audio/Music/bgMusic.wav");
+
 	//Each sensor gives a different amount of points to the player
 
 	bump_points = 500;
@@ -125,6 +129,7 @@ bool ModuleSceneIntro::Start()
 	tunel_points = 250000;
 	wagon_points = 500000;
 
+	App->audio->PlayFx(bg_music);
 	createSensors();
 
 	return ret;

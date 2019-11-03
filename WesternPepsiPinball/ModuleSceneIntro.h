@@ -49,6 +49,10 @@ public:
 	SDL_Texture* multipliersOFF = nullptr;
 	SDL_Texture* multipliersON = nullptr;
 
+	//Audio
+
+	uint intro_music;
+
 	//Animations
 
 	Animation bumper1_anim;
