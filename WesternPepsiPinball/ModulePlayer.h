@@ -38,9 +38,6 @@ public:
 
 	Animation horse;
 
-	PhysBody* ball = nullptr;
-
-
 	SDL_Texture* ball_tex = nullptr;
 	SDL_Texture* flipper_tex = nullptr;
 	SDL_Texture* horse_tex = nullptr;
