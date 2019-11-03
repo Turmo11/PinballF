@@ -30,9 +30,3 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "Western Pepsi Pinball"
-
-//To know if ball is in its path to the horse and what has to be drawn
-
-bool ballisStarting = true;
-bool pathToHorseIsDrawn = false;
-bool backgroundIsDrawn = false;

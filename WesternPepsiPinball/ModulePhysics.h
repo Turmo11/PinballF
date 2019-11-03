@@ -52,6 +52,13 @@ public:
 
 	b2World* world;
 
+
+	//To know if ball is in its path to the horse and what has to be drawn
+
+	bool ballisStarting = true;
+	bool pathToHorseIsDrawn = false;
+	bool backgroundIsDrawn = false;
+
 private:
 
 	bool debug = false;
