@@ -72,9 +72,11 @@ public:
 
 	//Physics
 
+	PhysBody* ball = nullptr;
+
 	PhysBody* propeller = nullptr;
 	PhysBody* propeller_pivot = nullptr;
-	PhysBody* ball = nullptr;
+	
 	PhysBody* leftFlipper = nullptr;
 	PhysBody* leftFlipper_pivot = nullptr;
 	PhysBody* rightFlipper1 = nullptr;

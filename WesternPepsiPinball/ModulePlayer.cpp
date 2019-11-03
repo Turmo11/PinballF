@@ -134,7 +134,59 @@ update_status ModulePlayer::Update()
 
 	//Death check
 
+	ball->GetPosition(position.x, position.y);
+	if (position.y > SCREEN_HEIGHT && life <= max_lives) {
+		delete ball;
+		ball->body = nullptr;
+		AddBall(initialBallPosition.x, initialBallPosition.y);
 
+		// Score
+		if (App->scene_intro->bonus_x10) 
+		{
+			App->scene_intro->score *= 10;
+		}	
+		else if (App->scene_intro->bonus_x8)
+		{
+			App->scene_intro->score *= 8;
+		}
+		else if (App->scene_intro->bonus_x6)
+		{
+			App->scene_intro->score *= 6;
+		}
+		else if (App->scene_intro->bonus_x4)
+		{
+			App->scene_intro->score *= 4;
+		}
+		else if (App->scene_intro->bonus_x2)
+		{ 
+			App->scene_intro->score *= 2; 
+		}
+			
+
+		// Setting high score
+		if (App->scene_intro->score > App->scene_intro->high_score)
+		{
+			App->scene_intro->high_score = App->scene_intro->score;
+		}
+
+		// Resetting all values
+		App->scene_intro->bonus_x2 = false;
+		App->scene_intro->bonus_x4 = false;
+		App->scene_intro->bonus_x6 = false;
+		App->scene_intro->bonus_x8 = false;
+		App->scene_intro->bonus_x10 = false;
+		App->scene_intro->hold = false;
+		App->scene_intro->bonus = 0;
+
+		App->scene_intro->flag1_state = false;
+		App->scene_intro->flag2_state = false;
+		App->scene_intro->flag3_state = false;
+
+		App->audio->PlayFx(newBallSound);
+
+		App->scene_intro->score = 0;
+		life++;
+	}
 
 	return UPDATE_CONTINUE;
 }
