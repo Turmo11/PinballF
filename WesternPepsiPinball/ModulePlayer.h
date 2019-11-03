@@ -20,6 +20,8 @@ public:
 	bool CleanUp();
 
 	void CreateFlippers();
+	void DrawEverything();
+	void AddBall(uint x, uint y);
 
 public:
 
