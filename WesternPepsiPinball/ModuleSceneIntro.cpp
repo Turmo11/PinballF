@@ -106,7 +106,7 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-//Load textures
+	//Load textures
 
 	background = App->textures->Load("Assets/Textures/background.png");
 	background2 = App->textures->Load("Assets/Textures/background2.png");
@@ -116,6 +116,16 @@ bool ModuleSceneIntro::Start()
 	switches = App->textures->Load("Assets/Textures/switches.png");
 	multipliersOFF = App->textures->Load("Assets/Textures/multipliersOFF.png");
 	multipliersON = App->textures->Load("Assets/Textures/multipliersON.png");
+
+	//Each sensor gives a different amount of points to the player
+
+	bump_points = 500;
+	flag_points = 1000;
+	cowboy_points = 1000;
+	tunel_points = 250000;
+	wagon_points = 500000;
+
+	createSensors();
 
 	return ret;
 }
@@ -212,8 +222,83 @@ update_status ModuleSceneIntro::Update()
 
 }
 
+//Create Collider Sensors
+
+void ModuleSceneIntro::createSensors() {
+
+	// Sensors for the flags
+	flag1_sensor = App->physics->CreateRectangleSensor(440, 114, 10, 10);
+	flag2_sensor = App->physics->CreateRectangleSensor(475, 125, 10, 10);
+	flag3_sensor = App->physics->CreateRectangleSensor(515, 135, 10, 10);
+
+	// Sensors for the hats
+	bumper1_sensor = App->physics->CreateRectangleSensor(418, 165, 40, 30);
+	bumper2_sensor = App->physics->CreateRectangleSensor(422, 205, 40, 30);
+	bumper3_sensor = App->physics->CreateRectangleSensor(473, 183, 40, 30);
+
+	// Sensors for the barrel
+	barrel1_sensor = App->physics->CreateRectangleSensor(190, 380, 80, 60);
+	barrel2_sensor = App->physics->CreateRectangleSensor(445, 390, 80, 60);
+	
+
+	// Sensor for the wagon
+	wagon_sensor = App->physics->CreateRectangleSensor(135, 255, 15, 15);
+
+	// Sensors for the path
+	tunel_sensor = App->physics->CreateRectangleSensor(550, 275, 15, 15);
+
+	
+
+	
+
+	
+}
+
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	if (!hold)
+	{
+		if (bodyB == flag1_sensor)
+		{
+			flag1_state = true;
+		}
+		if (bodyB == flag2_sensor)
+		{
+			flag2_state = true;
+		}
+		if (bodyB == flag3_sensor)
+		{
+			flag3_state = true;
+		}
+	}
 
+
+	if (bodyB == bumper1_sensor || bodyB == bumper2_sensor || bodyB == bumper3_sensor)
+	{
+
+		score += bump_points;
+		if (bodyB == bumper1_sensor) { App->scene_intro->bumper1_anim.Reset(); };
+		if (bodyB == bumper2_sensor) { App->scene_intro->bumper2_anim.Reset(); };
+		if (bodyB == bumper3_sensor) { App->scene_intro->bumper3_anim.Reset(); };
+	}
+	else if (bodyB == barrel1_sensor || bodyB == barrel2_sensor)
+	{
+
+		score += bump_points;
+	}
+	else if (bodyB == wagon_sensor) 
+	{
+		score += wagon_points;
+		
+	}
+	else if (bodyB == tunel_sensor) 
+	{
+		score += tunel_points;
+		
+	}
+	else 
+	{
+		score += bump_points;
+	}
 }
 

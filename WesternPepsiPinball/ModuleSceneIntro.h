@@ -16,6 +16,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void createSensors();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:
@@ -83,5 +84,34 @@ public:
 	bool cowboy9_state = true;
 	bool cowboy10_state = true;
 	bool cowboy11_state = true;
+
+	bool hold = false;
+
+	//Score
+
+	uint score;
+	uint bump_points;
+	uint flag_points;
+	uint cowboy_points;
+	uint tunel_points;
+	uint wagon_points;
+
+private:
+
+	//Collision sensors
 	
+	PhysBody* flag1_sensor = nullptr;
+	PhysBody* flag2_sensor = nullptr;
+	PhysBody* flag3_sensor = nullptr;
+
+	PhysBody* barrel1_sensor = nullptr;
+	PhysBody* barrel2_sensor = nullptr;
+
+	PhysBody* bumper1_sensor = nullptr;
+	PhysBody* bumper2_sensor = nullptr;
+	PhysBody* bumper3_sensor = nullptr;
+	
+	PhysBody* wagon_sensor = nullptr;
+
+	PhysBody* tunel_sensor = nullptr;
 };
