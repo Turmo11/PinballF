@@ -332,54 +332,7 @@ void ModuleSceneIntro::createSensors() {
 	
 }
 
-void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
-{
-	bodyA = App->player->ball;
-	if (!hold)
-	{
-		if (bodyB == flag1_sensor)
-		{
-			flag1_state = true;
-		}
-		if (bodyB == flag2_sensor)
-		{
-			flag2_state = true;
-		}
-		if (bodyB == flag3_sensor)
-		{
-			flag3_state = true;
-		}
-	}
 
-
-	if (bodyB == bumper1_sensor || bodyB == bumper2_sensor || bodyB == bumper3_sensor)
-	{
-
-		score += bump_points;
-		if (bodyB == bumper1_sensor) { App->scene_intro->bumper1_anim.Reset(); };
-		if (bodyB == bumper2_sensor) { App->scene_intro->bumper2_anim.Reset(); };
-		if (bodyB == bumper3_sensor) { App->scene_intro->bumper3_anim.Reset(); };
-	}
-	else if (bodyB == barrel1_sensor || bodyB == barrel2_sensor)
-	{
-
-		score += bump_points;
-	}
-	else if (bodyB == wagon_sensor) 
-	{
-		score += wagon_points;
-		
-	}
-	else if (bodyB == tunel_sensor) 
-	{
-		score += tunel_points;
-		
-	}
-	else 
-	{
-		score += bump_points;
-	}
-}
 
 void ModuleSceneIntro::setBonus() {
 

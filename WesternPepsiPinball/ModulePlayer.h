@@ -23,6 +23,7 @@ public:
 	void CreateLauncher(); //propeller
 	void DrawEverything();
 	void AddBall(uint x, uint y);
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:
 

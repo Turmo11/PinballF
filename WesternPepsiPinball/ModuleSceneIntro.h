@@ -18,7 +18,7 @@ public:
 	bool CleanUp();
 	void createSensors();
 	void setBonus();
-	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
 
 public:
 	p2List<PhysBody*> circles;
@@ -124,7 +124,7 @@ public:
 
 	uint bonus;
 
-private:
+
 
 	//Collision sensors
 	

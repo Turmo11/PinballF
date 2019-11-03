@@ -80,6 +80,7 @@ update_status ModulePlayer::Update()
 	if (!(App->scene_intro->game_over))
 	{
 		DrawEverything();
+		
 	}
 	//Controlls
 
@@ -328,5 +329,51 @@ void ModulePlayer::DrawEverything()
 }
 
 
+void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	if (!App->scene_intro->hold)
+	{
+		if (bodyB == App->scene_intro->flag1_sensor)
+		{
+			App->scene_intro->flag1_state = true;
+		}
+		if (bodyB == App->scene_intro->flag2_sensor)
+		{
+			App->scene_intro->flag2_state = true;
+		}
+		if (bodyB == App->scene_intro->flag3_sensor)
+		{
+			App->scene_intro->flag3_state = true;
+		}
+	}
 
+
+	if (bodyB == App->scene_intro->bumper1_sensor || bodyB == App->scene_intro->bumper2_sensor || bodyB == App->scene_intro->bumper3_sensor)
+	{
+
+		App->scene_intro->score += App->scene_intro->bump_points;
+		if (bodyB == App->scene_intro->bumper1_sensor) { App->scene_intro->bumper1_anim.Reset(); };
+		if (bodyB == App->scene_intro->bumper2_sensor) { App->scene_intro->bumper2_anim.Reset(); };
+		if (bodyB == App->scene_intro->bumper3_sensor) { App->scene_intro->bumper3_anim.Reset(); };
+	}
+	else if (bodyB == App->scene_intro->barrel1_sensor || bodyB == App->scene_intro->barrel2_sensor)
+	{
+
+		App->scene_intro->score += App->scene_intro->bump_points;
+	}
+	else if (bodyB == App->scene_intro->wagon_sensor)
+	{
+		App->scene_intro->score += App->scene_intro->wagon_points;
+
+	}
+	else if (bodyB == App->scene_intro->tunel_sensor)
+	{
+		App->scene_intro->score += App->scene_intro->tunel_points;
+
+	}
+	else
+	{
+		App->scene_intro->score += App->scene_intro->bump_points;
+	}
+}
 
