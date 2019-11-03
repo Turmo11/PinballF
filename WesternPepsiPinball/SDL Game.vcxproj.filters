@@ -54,6 +54,9 @@
     <ClInclude Include="Globals.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

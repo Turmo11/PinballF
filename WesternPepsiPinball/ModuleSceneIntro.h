@@ -19,16 +19,9 @@ public:
 
 public:
 	p2List<PhysBody*> circles;
-	p2List<PhysBody*> boxes;
-	p2List<PhysBody*> ricks;
 
-	PhysBody* sensor;
-	bool sensed;
+	//Textures
 
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
-	uint bonus_fx;
-	p2Point<int> ray;
-	bool ray_on;
+	SDL_Texture* background = nullptr;
+	
 };
