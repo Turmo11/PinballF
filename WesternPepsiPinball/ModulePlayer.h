@@ -20,23 +20,38 @@ public:
 	bool CleanUp();
 
 	//void OnCollision(PhysBody* BodyA, PhysBody* BodyB);
+	void putLeftFlipper();
+	void putRightFlipper();
 
 public:
 
 	PhysBody* ball = nullptr;
 
-	SDL_Texture* ball_tex;
+	SDL_Texture* ball_tex = nullptr;
+	SDL_Texture* flipper_tex = nullptr;
+	SDL_Texture* horse_tex = nullptr;
+
+	SDL_Rect right_flipper;
+	SDL_Rect left_flipper;
 
 	int score;
 	int life;
 	int highest_score;
 
-	bool finished_ball;
-	bool ball_launched;
-	bool lifeadded;
-
 	iPoint initialBallPosition;
+	iPoint position;
+	iPoint flipper_position;
 
-public:
+	PhysBody* leftFlipper = nullptr;
+	PhysBody* leftFlipper_pivot = nullptr;
+	PhysBody* rightFlipper1 = nullptr;
+	PhysBody* rightFlipper1_pivot = nullptr;
+	PhysBody* rightFlipper2 = nullptr;
+	PhysBody* rightFlipper2_pivot = nullptr;
+
+	b2PrismaticJoint* propellerJoint = nullptr;
+	b2RevoluteJoint* leftFlipperJoint = nullptr;
+	b2RevoluteJoint* rightFlipperJoint1 = nullptr;
+	b2RevoluteJoint* rightFlipperJoint2 = nullptr;
 
 };
