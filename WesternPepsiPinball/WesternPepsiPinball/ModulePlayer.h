@@ -2,12 +2,10 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
-#include "p2List.h"
-#include "Animation.h"
+#include "SDL/include/SDL.h"
 #include "Box2D/Box2D/Box2D.h"
 
 struct SDL_Texture;
-class PhysBody;
 
 class ModulePlayer : public Module
 {
@@ -19,24 +17,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	//void OnCollision(PhysBody* BodyA, PhysBody* BodyB);
-
-public:
-
-	PhysBody* ball = nullptr;
-
-	SDL_Texture* ball_tex;
-
-	int score;
-	int life;
-	int highest_score;
-
-	bool finished_ball;
-	bool ball_launched;
-	bool lifeadded;
-
-	iPoint initialBallPosition;
-
-public:
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 };
