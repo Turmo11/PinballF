@@ -52,6 +52,7 @@ bool ModulePlayer::Start()
 	horse_tex = App->textures->Load("Assets/Textures/horse.png");
 
 	initialBallPosition = { 620, 200 };
+	life = 1;
 
 	AddBall(initialBallPosition.x, initialBallPosition.y);
 	CreateFlippers();
@@ -76,8 +77,10 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	DrawEverything();
-
+	if (!(App->scene_intro->game_over))
+	{
+		DrawEverything();
+	}
 	//Controlls
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && App->player->life != 0)
@@ -135,7 +138,13 @@ update_status ModulePlayer::Update()
 	//Death check
 
 	ball->GetPosition(position.x, position.y);
-	if (position.y > SCREEN_HEIGHT && life < max_lives) {
+
+	if (position.y > SCREEN_HEIGHT && life == max_lives)
+	{
+		App->scene_intro->game_over = true;
+	}
+	if (position.y > SCREEN_HEIGHT && life < max_lives) 
+	{
 		delete ball;
 		ball->body = nullptr;
 		AddBall(initialBallPosition.x, initialBallPosition.y);

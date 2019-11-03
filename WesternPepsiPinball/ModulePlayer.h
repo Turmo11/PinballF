@@ -28,7 +28,7 @@ public:
 
 
 	//# of balls
-	uint life;
+	uint life = 1;
 	uint max_lives = 5;
 
 	//Booleans

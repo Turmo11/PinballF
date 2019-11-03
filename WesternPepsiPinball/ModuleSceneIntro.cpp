@@ -288,7 +288,7 @@ update_status ModuleSceneIntro::Update()
 		App->fonts->BlitText(97, 525, score_font, scoreboard);
 	}
 
-	if (App->player->life > App->player->max_lives) {
+	if (game_over) {
 		App->renderer->Blit(final_score, 170, 100);
 
 		sprintf_s(scoreboard, 10, "%7d", high_score);
