@@ -56,6 +56,210 @@ update_status ModulePhysics::PreUpdate()
 		}
 	}
 
+	//Background
+
+	//Activate after the horse animation
+
+	if (backgroundIsDrawn == false && ballisStarting == false)
+	{
+		b2Vec2 background[62];
+
+		int background_points[124] = {
+			248, 512,
+			248, 486,
+			252, 471,
+			242, 448,
+			211, 430,
+			153, 404,
+			125, 388,
+			91, 358,
+			69, 314,
+			487, 81,
+			504, 85,
+			518, 98,
+			539, 97,
+			560, 97,
+			588, 101,
+			617, 125,
+			630, 145,
+			646, 192,
+			650, 228,
+			655, 270,
+			659, 315,
+			655, 356,
+			651, 392,
+			647, 431,
+			640, 456,
+			636, 479,
+			606, 482,
+			608, 452,
+			620, 412,
+			632, 373,
+			633, 328,
+			633, 274,
+			628, 234,
+			625, 203,
+			612, 172,
+			598, 143,
+			582, 126,
+			561, 124,
+			547, 125,
+			542, 140,
+			547, 165,
+			559, 198,
+			559, 220,
+			558, 242,
+			563, 258,
+			580, 283,
+			589, 296,
+			603, 322,
+			604, 343,
+			599, 366,
+			589, 380,
+			570, 397,
+			544, 402,
+			510, 404,
+			481, 417,
+			458, 427,
+			437, 437,
+			412, 459,
+			413, 455,
+			406, 470,
+			403, 487,
+			402, 514
+		};
+
+		for (int i = 0; i < 62; i++) {
+
+			background[i].Set(PIXEL_TO_METERS(background_points[i * 2]), PIXEL_TO_METERS(background_points[i * 2 + 1]));
+
+		}
+
+		b2BodyDef backgroundBody;
+		backgroundBody.type = b2_staticBody;
+		backgroundBody.position.Set(PIXEL_TO_METERS(69), PIXEL_TO_METERS(81));
+
+		b2Body* bg1 = world->CreateBody(&backgroundBody);
+
+		b2ChainShape shape;
+		shape.CreateLoop(background, 62);
+		b2FixtureDef backgroundFixture;
+		backgroundFixture.shape = &shape;
+
+		bg1->CreateFixture(&backgroundFixture);
+
+
+		//Background 2
+
+		b2Vec2 background2[12];
+
+		int background2_points[24] = {
+			522, 216,
+			496, 360,
+			496, 381,
+			513, 384,
+			539, 377,
+			554, 370,
+			566, 364,
+			571, 351,
+			572, 330,
+			557, 307,
+			533, 278,
+			530, 239
+		};
+
+		for (int i = 0; i < 12; i++) {
+
+			background2[i].Set(PIXEL_TO_METERS(background2_points[i * 2]), PIXEL_TO_METERS(background2_points[i * 2 + 1]));
+
+		}
+
+		b2BodyDef background2Body;
+		background2Body.type = b2_staticBody;
+		background2Body.position.Set(PIXEL_TO_METERS(496), PIXEL_TO_METERS(216));
+
+		b2Body* bg2 = world->CreateBody(&background2Body);
+
+		b2ChainShape shape;
+		shape.CreateLoop(background2, 12);
+		b2FixtureDef background2Fixture;
+		background2Fixture.shape = &shape;
+
+		bg2->CreateFixture(&background2Fixture);
+
+
+		backgroundIsDrawn = true;
+	}
+
+	//Path from start to horse
+
+	if (pathToHorseIsDrawn == false && ballisStarting == true)
+	{
+		b2Vec2 pathToHorse[37];
+
+		int pathToHorse_points[74] = {
+			644, 89,
+			626, 100,
+			606, 114,
+			590, 127,
+			572, 144,
+			564, 158,
+			553, 184,
+			550, 201,
+			552, 228,
+			570, 255,
+			584, 273,
+			608, 295,
+			625, 308,
+			636, 321,
+			651, 336,
+			654, 346,
+			654, 382,
+			647, 405,
+			643, 419,
+			624, 412,
+			628, 388,
+			625, 364,
+			616, 340,
+			608, 324,
+			591, 307,
+			561, 284,
+			543, 261,
+			527, 234,
+			521, 200,
+			532, 167,
+			552, 132,
+			576, 109,
+			596, 93,
+			614, 80,
+			634, 64,
+			652, 54,
+			669, 76
+		};
+
+		for (int i = 0; i < 37; i++) {
+
+			pathToHorse[i].Set(PIXEL_TO_METERS(pathToHorse_points[i * 2]), PIXEL_TO_METERS(pathToHorse_points[i * 2 + 1]));
+
+		}
+
+		b2BodyDef pathToHorseBody;
+		pathToHorseBody.type = b2_staticBody;
+		pathToHorseBody.position.Set(PIXEL_TO_METERS(521), PIXEL_TO_METERS(54));
+
+		b2Body* pth = world->CreateBody(&pathToHorseBody);
+
+		b2ChainShape shape;
+		shape.CreateLoop(pathToHorse, 37);
+		b2FixtureDef pathToHorseFixture;
+		pathToHorseFixture.shape = &shape;
+
+		pth->CreateFixture(&pathToHorseFixture);
+
+
+		pathToHorseIsDrawn = true;
+	}
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -313,7 +517,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 
 			float fx = x2 - x1;
 			float fy = y2 - y1;
-			float dist = sqrtf((fx*fx) + (fy*fy));
+			float dist = sqrt((fx*fx) + (fy*fy));
 
 			normal_x = output.normal.x;
 			normal_y = output.normal.y;
