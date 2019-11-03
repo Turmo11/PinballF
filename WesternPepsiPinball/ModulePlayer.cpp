@@ -40,7 +40,7 @@ bool ModulePlayer::Start()
 	thrillingSound = App->audio->LoadFx("Assets/Audio/thrill.wav");
 	henSound = App->audio->LoadFx("Assets/Audio/hen.wav");
 	loseSound = App->audio->LoadFx("Assets/Audio/lose.wav");
-	touchingHat = App->audio->LoadFx("Assets/Audio/touchingHat.wav");
+	touchingbumper = App->audio->LoadFx("Assets/Audio/touchingbumper.wav");
 	wolfSound = App->audio->LoadFx("Assets/Audio/wolf.wav");
 	barrelSound = App->audio->LoadFx("Assets/Audio/barrel.wav");
 	newBallSound = App->audio->LoadFx("Assets/Audio/newBall.wav");
@@ -202,7 +202,7 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::AddBall(uint x, uint y)
 {
-	ball = App->physics->CreateCircle(initialBallPosition.x, initialBallPosition.y, 12, b2_dynamicBody, false);
+	ball = App->physics->CreateCircle(initialBallPosition.x, initialBallPosition.y, 12, b2_dynamicBody);
 }
 
 void ModulePlayer::CreateFlippers()
@@ -210,7 +210,7 @@ void ModulePlayer::CreateFlippers()
 	// Right Lower flipper
 
 	rightFlipper1 = App->physics->CreateRectangle(375, 500, 32, 10, b2_dynamicBody);
-	rightFlipper1_pivot = App->physics->CreateCircle(393, 489, 3, b2_staticBody, false);
+	rightFlipper1_pivot = App->physics->CreateCircle(393, 489, 3, b2_staticBody);
 
 	b2RevoluteJointDef joint;
 
@@ -236,7 +236,7 @@ void ModulePlayer::CreateFlippers()
 	// Right Upper flipper
 
 	rightFlipper2 = App->physics->CreateRectangle(475, 280, 32, 10, b2_dynamicBody);
-	rightFlipper2_pivot = App->physics->CreateCircle(499, 295, 3, b2_staticBody, false);
+	rightFlipper2_pivot = App->physics->CreateCircle(499, 295, 3, b2_staticBody);
 
 	joint.bodyA = rightFlipper2->body;
 	joint.bodyB = rightFlipper2_pivot->body;
@@ -260,7 +260,7 @@ void ModulePlayer::CreateFlippers()
 	//Left Flipper
 
 	leftFlipper = App->physics->CreateRectangle(242, 500, 32, 10, b2_dynamicBody);
-	leftFlipper_pivot = App->physics->CreateCircle(255, 489, 3, b2_staticBody, false);
+	leftFlipper_pivot = App->physics->CreateCircle(255, 489, 3, b2_staticBody);
 
 	joint.bodyA = leftFlipper->body;
 	joint.bodyB = leftFlipper_pivot->body;
@@ -285,7 +285,7 @@ void ModulePlayer::CreateFlippers()
 void ModulePlayer::CreateLauncher()
 {
 	propeller = App->physics->CreateRectangle(640, 428, 10, 30, b2_dynamicBody);
-	propeller_pivot = App->physics->CreateCircle(640, 428, 5, b2_staticBody, false);
+	propeller_pivot = App->physics->CreateCircle(640, 428, 5, b2_staticBody);
 
 	b2PrismaticJointDef joint;
 

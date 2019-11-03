@@ -48,7 +48,7 @@ public:
 	uint thrillingSound;
 	uint horseSound;
 	uint loseSound;
-	uint touchingHat;
+	uint touchingbumper;
 	uint wolfSound;
 	uint newBallSound;
 	uint flipperSound;

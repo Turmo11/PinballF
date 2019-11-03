@@ -314,7 +314,7 @@ void ModuleSceneIntro::createSensors() {
 	flag2_sensor = App->physics->CreateRectangleSensor(475, 125, 10, 10);
 	flag3_sensor = App->physics->CreateRectangleSensor(515, 135, 10, 10);
 
-	// Sensors for the hats
+	// Sensors for the bumpers
 	bumper1_sensor = App->physics->CreateRectangleSensor(418, 165, 40, 30);
 	bumper2_sensor = App->physics->CreateRectangleSensor(422, 205, 40, 30);
 	bumper3_sensor = App->physics->CreateRectangleSensor(473, 183, 40, 30);
@@ -334,6 +334,7 @@ void ModuleSceneIntro::createSensors() {
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	bodyA = App->player->ball;
 	if (!hold)
 	{
 		if (bodyB == flag1_sensor)
