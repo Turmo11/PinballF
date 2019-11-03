@@ -20,6 +20,7 @@ public:
 	bool CleanUp();
 
 	void CreateFlippers();
+	void CreateLauncher(); //propeller
 	void DrawEverything();
 	void AddBall(uint x, uint y);
 
@@ -33,14 +34,33 @@ public:
 	//Booleans
 
 	bool dead = false;
+	bool flipperplayed = false;
+
+	//Animations
+
+	Animation horse;
+
+
+	//FX
+
+	uint henSound;
+	uint barrelSound;
+	uint thrillingSound;
+	uint horseSound;
+	uint loseSound;
+	uint touchingHat;
+	uint wolfSound;
+	uint newBallSound;
+	uint flipperSound;
 
 	//Textures
 
-	Animation horse;
 
 	SDL_Texture* ball_tex = nullptr;
 	SDL_Texture* flipper_tex = nullptr;
 	SDL_Texture* horse_tex = nullptr;
+
+	//Sections for flipper.png
 
 	SDL_Rect rightFlipper_section;
 	SDL_Rect leftFlipper_section;
@@ -52,8 +72,9 @@ public:
 
 	//Physics
 
+	PhysBody* propeller = nullptr;
+	PhysBody* propeller_pivot = nullptr;
 	PhysBody* ball = nullptr;
-
 	PhysBody* leftFlipper = nullptr;
 	PhysBody* leftFlipper_pivot = nullptr;
 	PhysBody* rightFlipper1 = nullptr;
