@@ -1,0 +1,45 @@
+b2Vec2 leftBarrels[22];
+
+int leftBarrels_points[44] = {
+	146, 370,
+	148, 357,
+	156, 350,
+	168, 353,
+	176, 354,
+	185, 348,
+	194, 347,
+	205, 353,
+	208, 365,
+	207, 375,
+	214, 380,
+	225, 384,
+	230, 395,
+	229, 405,
+	227, 413,
+	214, 412,
+	203, 405,
+	192, 400,
+	179, 396,
+	174, 385,
+	163, 384,
+	147, 379
+};
+
+for (int i = 0; i < 22; i++) {
+
+	leftBarrels[i].Set(PIXEL_TO_METERS(leftBarrels_points[i * 2]), PIXEL_TO_METERS(leftBarrels_points[i * 2 + 1]));
+
+}
+
+b2BodyDef leftBarrelsBody;
+leftBarrelsBody.type = b2_staticBody;
+leftBarrelsBody.position.Set(PIXEL_TO_METERS(146), PIXEL_TO_METERS(347));
+
+b2Body* lb = world->CreateBody(&leftBarrelsBody);
+
+b2ChainShape leftBarrelsShape;
+leftBarrelsShape.CreateLoop(leftBarrels, 22);
+b2FixtureDef leftBarrelsFixture;
+leftBarrelsFixture.shape = &leftBarrelsShape;
+
+lb->CreateFixture(&leftBarrelsFixture);
